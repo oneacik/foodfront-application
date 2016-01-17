@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FoodFront.iml" filepath="$PROJECT_DIR$/FoodFront.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/foodfront-application.iml" filepath="$PROJECT_DIR$/foodfront-application.iml" />
     </modules>
   </component>
 </project>
