@@ -71,6 +71,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/button"
                         android:layout_margin="@dimen/button_margin"
+                        android:id="@+id/consume"
                         android:layout_columnSpan="1"
                         android:layout_rowSpan="1"
                         android:layout_columnWeight="1"

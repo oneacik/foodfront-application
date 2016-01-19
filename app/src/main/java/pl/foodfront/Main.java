@@ -1,8 +1,8 @@
 package pl.foodfront;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class Main extends AppCompatActivity {
@@ -25,6 +25,13 @@ public class Main extends AppCompatActivity {
             public void onClick(View v) {
 
                 findViewById(R.id.login_form).setVisibility(View.INVISIBLE);
+
+            }
+        });
+
+        findViewById(R.id.consume).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
