@@ -5,9 +5,15 @@ import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -74,10 +80,14 @@ public class JsonService extends AsyncTask<String, Void, JSONObject> {
             String json = new GsonBuilder().create().toJson(mJson, Map.class);
             HttpPost httpPost = new HttpPost(uri);
             try {
-                httpPost.setEntity(new StringEntity(json));
-                httpPost.setHeader("Accept", "application/json");
-                httpPost.setHeader("Content-type", "application/json");
-                new DefaultHttpClient().execute(httpPost);
+                StringEntity entity = new StringEntity(json);
+                entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                httpPost.setEntity(entity);
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                String response = EntityUtils.toString(httpEntity);
+                Log.i("Json", response);
             } catch (IOException e) {
                 Log.i("Exception", "Nie udało się nawiązać połączenia");
             }
