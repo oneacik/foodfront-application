@@ -18,10 +18,18 @@ public class Bridge {
     private static final String URL = "http://192.168.1.3:1337/android.php";
 
     private Map<String, String> mJson;
-    private HttpCommunicationService jsonService;
+    private HttpCommunicationService httpService;
 
-    public Bridge(ICallback callback) {
-        jsonService = new HttpCommunicationService(callback);
+    public Bridge() {
+        httpService = new HttpCommunicationService();
+    }
+
+    public void connectActivity(ICallback callback) {
+        httpService.connectActivity(callback);
+    }
+
+    public void disconnectActivity() {
+        httpService.disconnectActivity();
     }
 
     public boolean login(String user, String password) {
@@ -30,7 +38,7 @@ public class Bridge {
         mJson.put("username", user);
         mJson.put("password", password);
 
-        jsonService.invoke(URL, mJson);
+        httpService.invoke(URL, mJson);
 
         return true;
     }

@@ -29,9 +29,13 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
     private ICallback callback;
     private Responser responser;
 
-    HttpCommunicationService(ICallback callback) {
+    protected void connectActivity(ICallback callback) {
         this.callback = callback;
         this.responser = new Responser(callback);
+    }
+
+    protected void disconnectActivity() {
+        this.callback = null;
     }
 
     protected synchronized void invoke(String url, Map<String, String> mJson) {
@@ -69,6 +73,8 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         super.onPostExecute(response);
 
         // Oddelegowanie odpowiedzi do osobnej klasy
-        responser.answerMe(mJson, response);
+        if(callback != null) {  // sprawdzenie czy aktywność nie została usunięta
+            responser.answerMe(mJson, response);
+        }
     }
 }

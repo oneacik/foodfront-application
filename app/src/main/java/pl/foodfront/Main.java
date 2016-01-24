@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import pl.foodfront.communication.Bridge;
+
 public class Main extends AppCompatActivity implements ICallback {
 
     private static boolean LOGGED = false;
+    private Bridge bridge;
+    private ICallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +20,8 @@ public class Main extends AppCompatActivity implements ICallback {
         setContentView(R.layout.activity_main);
 
         // TODO zmienna będzie przekazywana do klasy Bridge żeby uzyskać sprzężenie zwrotne
-        final ICallback callback = this;
+        this.callback = this;
+        recallInterruptedConenction(); // w przypadku zmiany konfiguracji próbujemy uzyskać wcześniejszą instancję klasy Bridge
 
         findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,10 +43,35 @@ public class Main extends AppCompatActivity implements ICallback {
         findViewById(R.id.consume).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bridge bridge = new Bridge();
+                bridge.connectActivity(callback);
+                bridge.login("Pysio", "yxy123");
             }
         });
 
+    }
+
+    private void recallInterruptedConenction() {
+
+        bridge = (Bridge) this.getLastCustomNonConfigurationInstance();
+
+        if(bridge != null) {
+            bridge.connectActivity(callback);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(bridge != null) {
+            bridge.disconnectActivity();
+        }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return bridge;
     }
 
     @Override
