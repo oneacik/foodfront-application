@@ -43,9 +43,7 @@ public class Main extends AppCompatActivity implements ICallback {
         findViewById(R.id.consume).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bridge bridge = new Bridge();
-                bridge.connectActivity(callback);
-                bridge.login("Pysio", "yxy123");
+
             }
         });
 
