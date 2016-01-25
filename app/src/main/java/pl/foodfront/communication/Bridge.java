@@ -32,15 +32,13 @@ public class Bridge {
         httpService.disconnectActivity();
     }
 
-    public boolean login(String user, String password) {
+    public void login(String user, String password) {
         mJson = new HashMap<>();
         mJson.put("function", "login");
         mJson.put("username", user);
         mJson.put("password", password);
 
         httpService.invoke(URL, mJson);
-
-        return true;
     }
 
 }
