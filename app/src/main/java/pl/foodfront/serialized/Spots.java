@@ -1,4 +1,4 @@
-package pl.foodfront.wrappers;
+package pl.foodfront.serialized;
 
 /**
  * Created by Michał Stobiński on 2016-01-28.
@@ -6,8 +6,8 @@ package pl.foodfront.wrappers;
 public class Spots {
 
     private Place[] places;
-    private String error;
-    private String errno;
+
+    private Error error;
 
     public Place[] getPlaces() {
         return places;
@@ -17,19 +17,12 @@ public class Spots {
         this.places = places;
     }
 
-    public String getError() {
+    public Error getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(Error error) {
         this.error = error;
     }
 
-    public String getErrno() {
-        return errno;
-    }
-
-    public void setErrno(String errno) {
-        this.errno = errno;
-    }
 }

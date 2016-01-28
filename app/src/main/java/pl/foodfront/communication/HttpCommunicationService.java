@@ -16,16 +16,16 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.Map;
 
 import pl.foodfront.ICallback;
+import pl.foodfront.serialized.iSend;
 
 /**
  * Created by Michał Stobiński on 2016-01-18.
  */
 class HttpCommunicationService extends AsyncTask<String, Void, String> {
 
-    private Map<String, String> mJson;
+    private iSend send;
     private ICallback callback;
     private Responser responser;
 
@@ -38,10 +38,10 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         this.callback = null;
     }
 
-    protected synchronized void invoke(String url, Map<String, String> mJson) {
+    protected synchronized void invoke(String url, iSend send) {
         this.execute(url);
 
-        this.mJson = mJson;
+        this.send = send;
     }
 
     @SuppressWarnings("deprecation")
@@ -50,7 +50,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         String uri = params[0];
         String response = "";
 
-        String json = new GsonBuilder().create().toJson(mJson, Map.class);
+        String json = new GsonBuilder().create().toJson(send, iSend.class);
         HttpPost httpPost = new HttpPost(uri);
         try {
             StringEntity entity = new StringEntity(json);
@@ -74,7 +74,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
 
         // Oddelegowanie odpowiedzi do osobnej klasy
         if(callback != null) {  // sprawdzenie czy aktywność nie została usunięta
-            responser.answerMe(mJson, response);
+            responser.answerMe(send, response);
         }
     }
 }

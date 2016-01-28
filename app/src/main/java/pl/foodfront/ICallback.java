@@ -1,6 +1,6 @@
 package pl.foodfront;
 
-import pl.foodfront.wrappers.Spots;
+import pl.foodfront.serialized.Spots;
 
 /**
  * Created by Michał Stobiński on 2016-01-24.

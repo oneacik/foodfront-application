@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import pl.foodfront.communication.Bridge;
-import pl.foodfront.wrappers.Spots;
+import pl.foodfront.serialized.Spots;
 
 public class Main extends AppCompatActivity implements ICallback {
 

@@ -1,25 +1,19 @@
 package pl.foodfront.communication;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 
 import pl.foodfront.ICallback;
-import pl.foodfront.wrappers.Spots;
+import pl.foodfront.serialized.Error;
+import pl.foodfront.serialized.Spots;
+import pl.foodfront.serialized.iSend;
 
 /**
  * Created by Michał Stobiński on 2016-01-24.
  */
 class Responser {
 
-    private static final String FUNCTION = "function";
-
     private static final String LOGIN = "login"; // funkcja logowania
     private static final String GET_SPOTS = "getSpots"; // funkcja pobierania listy lokali
-    private static final String ERRNO = "errno"; // odpowiedź na żądanie
-    private static final String ERROR = "error"; // odpowiedź na żądanie - komunikat
 
     private ICallback callback;
 
@@ -27,8 +21,8 @@ class Responser {
         this.callback = callback;
     }
 
-    protected void answerMe(Map<String, String> map, String response) {
-        switch (map.get(FUNCTION)) {
+    protected void answerMe(iSend send, String response) {
+        switch (send.getFunction()) {
             case LOGIN:
                 answerForLogin(response);
                 break;
@@ -41,15 +35,14 @@ class Responser {
     }
 
     private void answerForLogin(String response) {
-        Type type = new TypeToken<Map<String, String>>(){}.getType();
-        Map<String, String> mapResponse = new GsonBuilder().create().fromJson(response, type);
+        Error error = new GsonBuilder().create().fromJson(response, Error.class);
 
-        switch(mapResponse.get(ERRNO)) {
-            case "0":
-                callback.loginInfo(true, mapResponse.get(ERROR));
+        switch(error.getErrno()) {
+            case 0:
+                callback.loginInfo(true, error.getError());
                 break;
             default:
-                callback.loginInfo(false, mapResponse.get(ERROR));
+                callback.loginInfo(false, error.getError());
                 break;
         }
     }
@@ -57,8 +50,8 @@ class Responser {
     private void answerForGetSpots(String response) {
         Spots spots = new GsonBuilder().create().fromJson(response, Spots.class);
 
-        switch(spots.getErrno()) {
-            case "0":
+        switch(spots.getError().getErrno()) {
+            case 0:
                 callback.invokeSpots(spots);
                 break;
             default:

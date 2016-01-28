@@ -8,12 +8,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import pl.foodfront.ICallback;
-import pl.foodfront.wrappers.Place;
-import pl.foodfront.wrappers.Spots;
+import pl.foodfront.serialized.Error;
+import pl.foodfront.serialized.GetSpots;
+import pl.foodfront.serialized.Login;
+import pl.foodfront.serialized.Place;
+import pl.foodfront.serialized.Spots;
+import pl.foodfront.serialized.iSend;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -41,11 +42,11 @@ public class ResponserTest {
     public void shouldInvokeLoginMethod() {
 
         // given
-        Map<String, String> inputJson = getLoginPost();
+        iSend login = getLoginPost();
         String responseJson = getLoginResponse();
 
         // when
-        responser.answerMe(inputJson, responseJson);
+        responser.answerMe(login, responseJson);
 
         // then
         verify(callback, times(1)).loginInfo(true, "");
@@ -55,57 +56,57 @@ public class ResponserTest {
     public void shouldInkoveGetSpotsMethod() {
 
         // given
-        Map<String, String> inputJson = getGetSpotsPost();
+        iSend getSpots = getGetSpotsPost();
         String responseJson = getGetSpotsResponse();
 
         // when
-        responser.answerMe(inputJson, responseJson);
+        responser.answerMe(getSpots, responseJson);
 
         // then
         verify(callback, times(1)).invokeSpots(any(Spots.class));
     }
 
-    private Map<String, String> getLoginPost() {
-        return new HashMap<String, String>() {{
-                put("function", "login");
-                put("username", "Kajtek");
-                put("password", "gonzalo123@#wr");
-            }};
+    private iSend getLoginPost() {
+        Login login = new Login();
+        login.setUsername("Kajtek");
+        login.setPassword("gonzalo123@2j");
+        return login;
     }
 
     private String getLoginResponse() {
-        return new GsonBuilder().create().toJson(
-                new HashMap<String, String>() {{
-                    put("errno", "0");
-                    put("error", "");
-                }}, Map.class
-        );
+        Error error = new Error();
+        error.setError("");
+        error.setErrno(0);
+        return new GsonBuilder().create().toJson(error, Error.class);
     }
 
-    private Map<String, String> getGetSpotsPost() {
-        return new HashMap<String, String>(){{ put("function", "getSpots"); }};
+    private iSend getGetSpotsPost() {
+        return new GetSpots();
     }
 
     private String getGetSpotsResponse() {
 
         Place classic = new Place();
         classic.setTitle("Classic burger");
-        classic.setLat("1");
-        classic.setLng("1");
-        classic.setMap_icon("12");
+        classic.setLat(1);
+        classic.setLng(1);
+        classic.setMap_icon(12);
 
         Place mcDonald = new Place();
         mcDonald.setTitle("McDonald");
-        mcDonald.setLat("2");
-        mcDonald.setLng("2");
-        mcDonald.setMap_icon("11");
+        mcDonald.setLat(2);
+        mcDonald.setLng(2);
+        mcDonald.setMap_icon(11);
 
         Place[] places = new Place[] {classic, mcDonald};
 
         Spots spots = new Spots();
+        Error error = new Error();
+
         spots.setPlaces(places);
-        spots.setError("");
-        spots.setErrno("0");
+        error.setError("");
+        error.setErrno(0);
+        spots.setError(error);
 
         return new GsonBuilder().create().toJson(spots, Spots.class);
 
