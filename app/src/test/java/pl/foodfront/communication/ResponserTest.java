@@ -67,11 +67,7 @@ public class ResponserTest {
     }
 
     private iSend getLoginPost() {
-        Login login = new Login();
-        login.setUsername("Kajtek");
-        login.setPassword("gonzalo123@2j");
-        return login;
-    }
+        return new Login("Kajtek", "gonzalo1232"); }
 
     private String getLoginResponse() {
         Error error = new Error();
@@ -81,8 +77,7 @@ public class ResponserTest {
     }
 
     private iSend getGetSpotsPost() {
-        return new GetSpots();
-    }
+        return new GetSpots(); }
 
     private String getGetSpotsResponse() {
 
@@ -90,12 +85,14 @@ public class ResponserTest {
         classic.setTitle("Classic burger");
         classic.setLat(1);
         classic.setLng(1);
+        classic.setId(1);
         classic.setMap_icon(12);
 
         Place mcDonald = new Place();
         mcDonald.setTitle("McDonald");
         mcDonald.setLat(2);
         mcDonald.setLng(2);
+        mcDonald.setId(2);
         mcDonald.setMap_icon(11);
 
         Place[] places = new Place[] {classic, mcDonald};

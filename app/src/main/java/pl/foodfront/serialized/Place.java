@@ -9,6 +9,7 @@ public class Place {
     private double lat;
     private double lng;
     private int map_icon;
+    private long id;
 
     public String getTitle() { return title; }
 
@@ -39,5 +40,9 @@ public class Place {
     public void setMap_icon(int map_icon) {
         this.map_icon = map_icon;
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
 }

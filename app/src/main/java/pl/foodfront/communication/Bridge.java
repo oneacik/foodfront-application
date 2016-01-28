@@ -1,7 +1,5 @@
 package pl.foodfront.communication;
 
-import java.util.Map;
-
 import pl.foodfront.ICallback;
 import pl.foodfront.serialized.Login;
 
@@ -31,12 +29,6 @@ public class Bridge {
         httpService.disconnectActivity();
     }
 
-    public void login(String user, String password) {
-        Login login = new Login();
-        login.setUsername(user);
-        login.setPassword(password);
-
-        httpService.invoke(URL, login);
-    }
+    public void login(String user, String password) { httpService.invoke(URL, new Login(user, password)); }
 
 }

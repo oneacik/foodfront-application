@@ -8,6 +8,11 @@ public class Login implements iSend {
     private String username;
     private String password;
 
+    public Login(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -24,8 +29,5 @@ public class Login implements iSend {
         this.password = password;
     }
 
-    @Override
-    public String getFunction() {
-        return "login";
-    }
+    @Override  public String getFunction() { return "login"; }
 }
