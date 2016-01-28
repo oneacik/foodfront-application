@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import pl.foodfront.communication.Bridge;
+import pl.foodfront.wrappers.Spots;
 
 public class Main extends AppCompatActivity implements ICallback {
 
@@ -78,4 +79,11 @@ public class Main extends AppCompatActivity implements ICallback {
         this.LOGGED = logged;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void invokeSpots(Spots spots) {
+        // TODO na razie tylko powiadomienie o nowych miejscach
+        Toast.makeText(this, "Witaj w " + spots.getPlaces()[0].getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
 }
