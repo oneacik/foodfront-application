@@ -56,6 +56,8 @@ public class Main extends AppCompatActivity implements ICallback {
 
         if(bridge != null) {
             bridge.connectActivity(callback);
+        } else {
+            bridge = new Bridge();
         }
     }
 

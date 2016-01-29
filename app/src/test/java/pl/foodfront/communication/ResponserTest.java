@@ -83,16 +83,16 @@ public class ResponserTest {
 
         Place classic = new Place();
         classic.setTitle("Classic burger");
-        classic.setLat(1);
-        classic.setLng(1);
-        classic.setId(1);
+        classic.setLat(1d);
+        classic.setLng(1d);
+        classic.setId(1l);
         classic.setMap_icon(12);
 
         Place mcDonald = new Place();
         mcDonald.setTitle("McDonald");
-        mcDonald.setLat(2);
-        mcDonald.setLng(2);
-        mcDonald.setId(2);
+        mcDonald.setLat(2d);
+        mcDonald.setLng(2d);
+        mcDonald.setId(2l);
         mcDonald.setMap_icon(11);
 
         Place[] places = new Place[] {classic, mcDonald};

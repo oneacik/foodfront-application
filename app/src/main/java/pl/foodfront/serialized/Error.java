@@ -5,14 +5,12 @@ package pl.foodfront.serialized;
  */
 public class Error {
 
-    private int errno;
+    private Integer errno;
     private String error;
 
-    public int getErrno() {
-        return errno;
-    }
+    public Integer getErrno() { return errno; }
 
-    public void setErrno(int errno) {
+    public void setErrno(Integer errno) {
         this.errno = errno;
     }
 

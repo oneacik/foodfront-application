@@ -5,12 +5,14 @@ package pl.foodfront.serialized;
  */
 public class Login implements iSend {
 
+    private String function;
     private String username;
     private String password;
 
     public Login(String username, String password) {
         this.username = username;
         this.password = password;
+        this.function = "login";
     }
 
     public String getUsername() {
@@ -29,5 +31,5 @@ public class Login implements iSend {
         this.password = password;
     }
 
-    @Override  public String getFunction() { return "login"; }
+    @Override  public String getFunction() { return function; }
 }

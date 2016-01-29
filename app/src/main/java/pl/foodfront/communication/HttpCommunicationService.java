@@ -3,8 +3,6 @@ package pl.foodfront.communication;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.GsonBuilder;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -50,7 +48,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         String uri = params[0];
         String response = "";
 
-        String json = new GsonBuilder().create().toJson(send, iSend.class);
+        String json = JsonConverter.serializePost(send);
         HttpPost httpPost = new HttpPost(uri);
         try {
             StringEntity entity = new StringEntity(json);
