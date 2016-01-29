@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 
 import pl.foodfront.ICallback;
 import pl.foodfront.serialized.Error;
+import pl.foodfront.serialized.Place;
 import pl.foodfront.serialized.Spots;
 import pl.foodfront.serialized.iSend;
 
@@ -12,9 +13,6 @@ import pl.foodfront.serialized.iSend;
  */
 class Responser {
 
-    private static final String LOGIN = "login"; // funkcja logowania
-    private static final String GET_SPOTS = "getSpots"; // funkcja pobierania listy lokali
-
     private ICallback callback;
 
     Responser(ICallback callback) {
@@ -22,16 +20,19 @@ class Responser {
     }
 
     protected void answerMe(iSend send, String response) {
-        switch (send.getFunction()) {
-            case LOGIN:
-                answerForLogin(response);
-                break;
-            case GET_SPOTS:
-                answerForGetSpots(response);
-                break;
-            default:
-                break;
+
+        String s = send.getFunction();
+        if (s.equals(eFunctions.LOGIN.toString())) {
+            answerForLogin(response);
+
+        } else if (s.equals(eFunctions.GET_SPOTS.toString())) {
+            answerForGetSpots(response);
+
+        } else if (s.equals(eFunctions.GET_SPOT.toString())) {
+            answerForGetSpot(response);
+
         }
+
     }
 
     private void answerForLogin(String response) {
@@ -53,6 +54,19 @@ class Responser {
         switch(spots.getError().getErrno()) {
             case 0:
                 callback.invokeSpots(spots);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void answerForGetSpot(String response) {
+        Place place = new GsonBuilder().create().fromJson(response, Place.class);
+
+        switch(place.getError().getErrno()) {
+            case 0:
+                // TODO jakoś zareagować na odpowiedź
                 break;
             default:
                 break;

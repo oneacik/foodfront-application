@@ -12,6 +12,7 @@ public class Place {
     private Integer map_icon;
     private Integer hi_icon;
     private Long id;
+    private Error error;
 
     public Integer getMenu() { return menu; }
 
@@ -41,4 +42,7 @@ public class Place {
 
     public void setHi_icon(Integer hi_icon) { this.hi_icon = hi_icon; }
 
+    public Error getError() { return error; }
+
+    public void setError(Error error) { this.error = error; }
 }

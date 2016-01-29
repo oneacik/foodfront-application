@@ -11,18 +11,18 @@ import pl.foodfront.serialized.iSend;
  */
 class JsonConverter {
 
-    private static final String LOGIN = "login"; // funkcja logowania
-    private static final String GET_SPOTS = "getSpots"; // funkcja pobierania listy lokali
-
     protected static String serializePost(iSend send) {
 
-        switch(send.getFunction()) {
-            case LOGIN:
-                return new GsonBuilder().create().toJson(send, Login.class);
-            case GET_SPOTS:
-                return new GsonBuilder().create().toJson(send, GetSpots.class);
-            default:
-                return null;
+        String s = send.getFunction();
+
+        if (s.equals(eFunctions.LOGIN.toString())) {
+            return new GsonBuilder().create().toJson(send, Login.class);
+        } else if (s.equals(eFunctions.GET_SPOTS.toString())) {
+            return new GsonBuilder().create().toJson(send, GetSpots.class);
+        } else if (s.equals(eFunctions.GET_SPOT.toString())) {
+            return new GsonBuilder().create().toJson(send, GetSpots.class);
+        } else {
+            return null;
         }
 
     }
