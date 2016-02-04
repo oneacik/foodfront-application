@@ -1,4 +1,4 @@
-package pl.foodfront;
+package pl.foodfront.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import pl.foodfront.R;
 import pl.foodfront.communication.Bridge;
 import pl.foodfront.serialized.Spots;
 
-public class Main extends AppCompatActivity implements ICallback {
+public class Main extends AppCompatActivity implements IMainCallback {
 
-    private static boolean LOGGED = false;
     private Bridge bridge;
-    private ICallback callback;
+    private IMainCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +73,6 @@ public class Main extends AppCompatActivity implements ICallback {
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         return bridge;
-    }
-
-    @Override
-    public void loginInfo(Boolean logged, String msg) {
-        // TODO na razie tylko powiadomienie o logowaniu
-        this.LOGGED = logged;
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

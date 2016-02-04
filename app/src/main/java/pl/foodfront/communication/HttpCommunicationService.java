@@ -15,8 +15,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-import pl.foodfront.ICallback;
 import pl.foodfront.serialized.iSend;
+import pl.foodfront.views.ICallback;
 
 /**
  * Created by Michał Stobiński on 2016-01-18.

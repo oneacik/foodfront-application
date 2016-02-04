@@ -1,4 +1,6 @@
-package pl.foodfront;
+package pl.foodfront.views;
+
+import pl.foodfront.R;
 
 /**
  * Created by oneat on 11/11/15.

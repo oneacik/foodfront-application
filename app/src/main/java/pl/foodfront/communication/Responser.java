@@ -2,11 +2,13 @@ package pl.foodfront.communication;
 
 import com.google.gson.GsonBuilder;
 
-import pl.foodfront.ICallback;
 import pl.foodfront.serialized.Error;
 import pl.foodfront.serialized.Place;
 import pl.foodfront.serialized.Spots;
 import pl.foodfront.serialized.iSend;
+import pl.foodfront.views.ICallback;
+import pl.foodfront.views.ILoginCallback;
+import pl.foodfront.views.IMainCallback;
 
 /**
  * Created by Michał Stobiński on 2016-01-24.
@@ -40,10 +42,10 @@ class Responser {
 
         switch(error.getErrno()) {
             case 0:
-                callback.loginInfo(true, error.getError());
+                ((ILoginCallback) callback).loginInfo(true, error.getError());
                 break;
             default:
-                callback.loginInfo(false, error.getError());
+                ((ILoginCallback) callback).loginInfo(false, error.getError());
                 break;
         }
     }
@@ -53,7 +55,7 @@ class Responser {
 
         switch(spots.getError().getErrno()) {
             case 0:
-                callback.invokeSpots(spots);
+                ((IMainCallback) callback).invokeSpots(spots);
                 break;
             default:
                 break;

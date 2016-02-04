@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:src="@drawable/food_front"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nazwa użytkownika"
+            android:labelFor="@+id/loginEtUser"
+            android:textColor="@color/common_plus_signin_btn_text_dark_disabled"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+        <EditText
+            android:id="@+id/loginEtUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Podaj nazwę użytkownika"
+            android:padding="10dp"
+            android:background="@color/common_plus_signin_btn_text_dark_disabled"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hasło"
+            android:labelFor="@+id/loginEtPass"
+            android:textColor="@color/common_plus_signin_btn_text_dark_disabled"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+        <EditText
+            android:id="@+id/loginEtPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Podaj hasło"
+            android:padding="10dp"
+            android:inputType="textPassword"
+            android:background="@color/common_plus_signin_btn_text_dark_disabled"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+        <TableRow
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="bottom"
+            android:layout_margin="20dp">
+
+            <Button
+                android:id="@+id/loginButConfirm"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="Zatwierdź"/>
+
+            <Button
+                android:id="@+id/loginButCancel"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="Pomiń"/>
+
+        </TableRow>
+
+    </LinearLayout>
+
+</LinearLayout>

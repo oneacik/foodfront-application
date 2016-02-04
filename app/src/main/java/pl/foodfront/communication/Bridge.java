@@ -1,7 +1,7 @@
 package pl.foodfront.communication;
 
-import pl.foodfront.ICallback;
 import pl.foodfront.serialized.Login;
+import pl.foodfront.views.ICallback;
 
 /**
  * Created by Michał Stobiński on 2016-01-24.

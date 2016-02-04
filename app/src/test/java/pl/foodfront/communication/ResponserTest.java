@@ -2,21 +2,21 @@ package pl.foodfront.communication;
 
 import com.google.gson.GsonBuilder;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import pl.foodfront.ICallback;
 import pl.foodfront.serialized.Error;
 import pl.foodfront.serialized.GetSpots;
 import pl.foodfront.serialized.Login;
 import pl.foodfront.serialized.Place;
 import pl.foodfront.serialized.Spots;
 import pl.foodfront.serialized.iSend;
+import pl.foodfront.views.ILoginCallback;
+import pl.foodfront.views.IMainCallback;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -27,13 +27,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ResponserTest {
 
-    @Mock private ICallback callback;
     private Responser responser;
-
-    @Before
-    public void initialize() {
-        responser = new Responser(callback);
-    }
 
     /*
         Weryfikacja czy poprawna metoda jest wywoływana w zależności od odebranego JSONa
@@ -42,20 +36,27 @@ public class ResponserTest {
     public void shouldInvokeLoginMethod() {
 
         // given
+        ILoginCallback loginCallback = mock(ILoginCallback.class);
+
+        responser = new Responser(loginCallback);
         iSend login = getLoginPost();
         String responseJson = getLoginResponse();
 
         // when
+
         responser.answerMe(login, responseJson);
 
         // then
-        verify(callback, times(1)).loginInfo(true, "");
+        verify(loginCallback, times(1)).loginInfo(true, "");
     }
 
     @Test
     public void shouldInkoveGetSpotsMethod() {
 
         // given
+        IMainCallback mainCallback = mock(IMainCallback.class);
+
+        responser = new Responser(mainCallback);
         iSend getSpots = getGetSpotsPost();
         String responseJson = getGetSpotsResponse();
 
@@ -63,7 +64,7 @@ public class ResponserTest {
         responser.answerMe(getSpots, responseJson);
 
         // then
-        verify(callback, times(1)).invokeSpots(any(Spots.class));
+        verify(mainCallback, times(1)).invokeSpots(any(Spots.class));
     }
 
     private iSend getLoginPost() {
