@@ -2,6 +2,7 @@ package pl.foodfront.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -27,8 +28,8 @@ public class Main extends AppCompatActivity implements IMainCallback {
         findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Main.this, ActivitySearch.class);
-                startActivity(i);
+                bridge.connectActivity(callback);
+                bridge.getSpots();
             }
         });
 
@@ -77,8 +78,11 @@ public class Main extends AppCompatActivity implements IMainCallback {
 
     @Override
     public void invokeSpots(Spots spots) {
-        // TODO na razie tylko powiadomienie o nowych miejscach
-        Toast.makeText(this, "Witaj w " + spots.getPlaces()[0].getTitle(), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(Main.this, ActivitySearch.class);
+
+        if(spots != null) { i.putExtra("spots", spots); }
+
+        startActivity(i);
     }
 
 }

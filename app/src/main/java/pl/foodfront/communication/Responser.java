@@ -58,6 +58,7 @@ class Responser {
                 ((IMainCallback) callback).invokeSpots(spots);
                 break;
             default:
+                ((IMainCallback) callback).invokeSpots(null);
                 break;
         }
 

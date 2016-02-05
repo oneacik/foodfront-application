@@ -9,8 +9,9 @@ public class GetSpot implements iSend {
 
     private Long id;
 
-    public GetSpot() {
+    public GetSpot(Long id) {
         this.function = "getSpot";
+        this.id = id;
     }
 
     @Override
@@ -19,5 +20,4 @@ public class GetSpot implements iSend {
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
-
 }

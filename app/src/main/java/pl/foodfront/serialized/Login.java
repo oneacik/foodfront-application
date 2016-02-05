@@ -23,13 +23,9 @@ public class Login implements iSend {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    @Override  public String getFunction() { return function; }
+    @Override public String getFunction() { return function; }
 }

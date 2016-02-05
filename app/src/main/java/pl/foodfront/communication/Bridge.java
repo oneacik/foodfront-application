@@ -1,5 +1,7 @@
 package pl.foodfront.communication;
 
+import pl.foodfront.serialized.GetSpot;
+import pl.foodfront.serialized.GetSpots;
 import pl.foodfront.serialized.Login;
 import pl.foodfront.views.ICallback;
 
@@ -30,5 +32,7 @@ public class Bridge {
     }
 
     public void login(String user, String password) { httpService.invoke(URL, new Login(user, password)); }
+    public void getSpots() { httpService.invoke(URL, new GetSpots()); }
+    public void getSpot(Long id) { httpService.invoke(URL, new GetSpot(id)); }
 
 }
