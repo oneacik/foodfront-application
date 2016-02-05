@@ -1,5 +1,7 @@
 package pl.foodfront.communication;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -26,6 +28,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
     private iSend send;
     private ICallback callback;
     private Responser responser;
+    private ProgressDialog dialog;
 
     protected void connectActivity(ICallback callback) {
         this.callback = callback;
@@ -40,6 +43,15 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         this.execute(url);
 
         this.send = send;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        dialog = new ProgressDialog((Context) callback);
+        dialog.setMessage("Walidacja w toku...");
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     @SuppressWarnings("deprecation")
@@ -70,8 +82,12 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
 
+        if(dialog != null) {
+            dialog.dismiss();
+        }
+
         // Oddelegowanie odpowiedzi do osobnej klasy
-        if(callback != null) {  // sprawdzenie czy aktywność nie została usunięta
+        if(callback != null && !response.equals("")) {  // sprawdzenie czy aktywność nie została usunięta
             responser.answerMe(send, response);
         }
     }
