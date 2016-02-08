@@ -1,9 +1,11 @@
 package pl.foodfront.serialized;
 
+import java.io.Serializable;
+
 /**
  * Created by Michał Stobiński on 2016-01-28.
  */
-public class Place {
+public class Place implements Serializable {
 
     private Integer menu;
     private String title;

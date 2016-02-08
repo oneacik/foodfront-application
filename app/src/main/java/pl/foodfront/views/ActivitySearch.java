@@ -9,20 +9,28 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import pl.foodfront.R;
+import pl.foodfront.serialized.Place;
+import pl.foodfront.serialized.Spots;
 
 
-public class ActivitySearch extends AppCompatActivity {
-    class foods extends BaseAdapter{
+public class ActivitySearch extends AppCompatActivity implements OnMapReadyCallback {
+
+    class Foods extends BaseAdapter{
 
         Food[] main;
         Activity a;
 
-
-        public foods(Food[] t,Activity a){
-            main=t;
-            this.a=a;
-
+        public Foods(Food[] t, Activity a){
+            main = t;
+            this.a = a;
         }
 
 
@@ -43,11 +51,12 @@ public class ActivitySearch extends AppCompatActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            final View v=a.getLayoutInflater().inflate(R.layout.grid_food_element,null);
-            final ImageView im=(ImageView)v.findViewById(R.id.image);
-            if(!main[position].clicked){
+            final View v = a.getLayoutInflater().inflate(R.layout.grid_food_element,null);
+            final ImageView im = (ImageView)v.findViewById(R.id.image);
+
+            if(!main[position].clicked) {
                 im.setBackgroundColor(0xFFFFFFFF);
-            }else{
+            } else{
                 im.setBackgroundResource(R.drawable.button);
             }
             v.setOnClickListener(new View.OnClickListener() {
@@ -55,9 +64,9 @@ public class ActivitySearch extends AppCompatActivity {
                 public void onClick(View vv) {
                     main[position].click();
 
-                    if(!main[position].clicked){
+                    if(!main[position].clicked) {
                         im.setBackgroundColor(0xFFFFFFFF);
-                    }else{
+                    } else{
                         im.setBackgroundResource(R.drawable.button);
                     }
 
@@ -69,17 +78,28 @@ public class ActivitySearch extends AppCompatActivity {
         }
     }
 
+    private GoogleMap googleMap;
+    private SupportMapFragment supportMapFragment;
+    private Spots spots;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_activity_search);
-        foods f=new foods(Foods.getInstance().getFoods(),this);
-        ((GridView)findViewById(R.id.foods)).setAdapter(f);
+
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(this);
+
+        spots = (Spots) getIntent().getSerializableExtra("spots");
+
+        Foods f = new Foods(pl.foodfront.views.Foods.getInstance().getFoods(),this);
+        ((GridView) findViewById(R.id.foods)).setAdapter(f);
 
         findViewById(R.id.filtername).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Foods f = Foods.getInstance();
+                pl.foodfront.views.Foods f = pl.foodfront.views.Foods.getInstance();
                 f.filtername = !f.filtername;
                 reAssign();
             }
@@ -88,25 +108,38 @@ public class ActivitySearch extends AppCompatActivity {
         findViewById(R.id.maplist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Foods f=Foods.getInstance();
-                f.maplist=!f.maplist;
+                pl.foodfront.views.Foods f = pl.foodfront.views.Foods.getInstance();
+                f.maplist = !f.maplist;
                 reAssign();
             }
         });
 
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+        if(spots != null) {
+            disposeOnMap(spots);
+        }
+    }
+
+    private void disposeOnMap(Spots spots) {
+        Place mcDonald = spots.getPlaces()[0];
+        LatLng latLng = new LatLng(mcDonald.getLat(), mcDonald.getLng());
+        googleMap.addMarker(new MarkerOptions().position(latLng).title("McDonald"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
     public void reAssign(){
-        Foods f=Foods.getInstance();
+        pl.foodfront.views.Foods f= pl.foodfront.views.Foods.getInstance();
         findViewById(R.id.filtername).setBackgroundResource(f.filtername ? R.drawable.button_food : R.drawable.button_name);
         findViewById(R.id.maplist).setBackgroundResource(f.maplist?R.drawable.button_map:R.drawable.button_list);
         findViewById(R.id.mappart).setVisibility(f.maplist ? View.VISIBLE : View.INVISIBLE);
         findViewById(R.id.listpart).setVisibility(f.maplist ? View.INVISIBLE : View.VISIBLE);
         findViewById(R.id.filterpart).setVisibility(f.filtername ? View.VISIBLE : View.INVISIBLE);
         findViewById(R.id.namepart).setVisibility(f.filtername?View.INVISIBLE:View.VISIBLE);
-
-
-
     }
 
 

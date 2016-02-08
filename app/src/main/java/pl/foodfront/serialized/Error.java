@@ -1,9 +1,11 @@
 package pl.foodfront.serialized;
 
+import java.io.Serializable;
+
 /**
  * Created by Michał Stobiński on 2016-01-28.
  */
-public class Error {
+public class Error implements Serializable {
 
     private Integer errno;
     private String error;

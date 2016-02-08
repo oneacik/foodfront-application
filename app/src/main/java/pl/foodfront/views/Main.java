@@ -2,10 +2,8 @@ package pl.foodfront.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import pl.foodfront.R;
 import pl.foodfront.communication.Bridge;
