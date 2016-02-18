@@ -9,15 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import pl.foodfront.R;
-import pl.foodfront.serialized.Place;
+import pl.foodfront.map.MapHelper;
 import pl.foodfront.serialized.Spots;
 
 
@@ -51,8 +48,8 @@ public class ActivitySearch extends AppCompatActivity implements OnMapReadyCallb
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            final View v = a.getLayoutInflater().inflate(R.layout.grid_food_element,null);
-            final ImageView im = (ImageView)v.findViewById(R.id.image);
+            final View v = a.getLayoutInflater().inflate(R.layout.grid_food_element, null);
+            final ImageView im = (ImageView) v.findViewById(R.id.image);
 
             if(!main[position].clicked) {
                 im.setBackgroundColor(0xFFFFFFFF);
@@ -119,17 +116,11 @@ public class ActivitySearch extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        MapHelper mapHelper = new MapHelper(googleMap);
 
-        if(spots != null) {
-            disposeOnMap(spots);
+        if (spots != null) {
+            mapHelper.disposeSpotsOnMap(spots);
         }
-    }
-
-    private void disposeOnMap(Spots spots) {
-        Place mcDonald = spots.getPlaces()[0];
-        LatLng latLng = new LatLng(mcDonald.getLat(), mcDonald.getLng());
-        googleMap.addMarker(new MarkerOptions().position(latLng).title("McDonald"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     public void reAssign(){
