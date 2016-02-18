@@ -17,7 +17,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-import pl.foodfront.serialized.iSend;
+import pl.foodfront.serialized.iSerialize;
 import pl.foodfront.views.ICallback;
 
 /**
@@ -25,7 +25,7 @@ import pl.foodfront.views.ICallback;
  */
 class HttpCommunicationService extends AsyncTask<String, Void, String> {
 
-    private iSend send;
+    private iSerialize send;
     private ICallback callback;
     private Responser responser;
     private ProgressDialog dialog;
@@ -39,7 +39,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         this.callback = null;
     }
 
-    protected synchronized void invoke(String url, iSend send) {
+    protected synchronized void invoke(String url, iSerialize send) {
         this.execute(url);
 
         this.send = send;
@@ -60,7 +60,7 @@ class HttpCommunicationService extends AsyncTask<String, Void, String> {
         String uri = params[0];
         String response = "";
 
-        String json = JsonConverter.serializePost(send);
+        String json = send.serializeToJson();
         HttpPost httpPost = new HttpPost(uri);
         try {
             StringEntity entity = new StringEntity(json);

@@ -11,7 +11,7 @@ import pl.foodfront.serialized.GetSpots;
 import pl.foodfront.serialized.Login;
 import pl.foodfront.serialized.Place;
 import pl.foodfront.serialized.Spots;
-import pl.foodfront.serialized.iSend;
+import pl.foodfront.serialized.iSerialize;
 import pl.foodfront.views.ILoginCallback;
 import pl.foodfront.views.IMainCallback;
 
@@ -39,7 +39,7 @@ public class ResponserTest {
         ILoginCallback loginCallback = mock(ILoginCallback.class);
 
         responser = new Responser(loginCallback);
-        iSend login = getLoginPost();
+        iSerialize login = getLoginPost();
         String responseJson = getLoginResponse();
 
         // when
@@ -57,7 +57,7 @@ public class ResponserTest {
         IMainCallback mainCallback = mock(IMainCallback.class);
 
         responser = new Responser(mainCallback);
-        iSend getSpots = getGetSpotsPost();
+        iSerialize getSpots = getGetSpotsPost();
         String responseJson = getGetSpotsResponse();
 
         // when
@@ -67,7 +67,7 @@ public class ResponserTest {
         verify(mainCallback, times(1)).invokeSpots(any(Spots.class));
     }
 
-    private iSend getLoginPost() {
+    private iSerialize getLoginPost() {
         return new Login("Kajtek", "gonzalo1232"); }
 
     private String getLoginResponse() {
@@ -77,7 +77,7 @@ public class ResponserTest {
         return new GsonBuilder().create().toJson(error, Error.class);
     }
 
-    private iSend getGetSpotsPost() {
+    private iSerialize getGetSpotsPost() {
         return new GetSpots(); }
 
     private String getGetSpotsResponse() {

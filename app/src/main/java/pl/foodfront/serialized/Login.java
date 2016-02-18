@@ -1,9 +1,11 @@
 package pl.foodfront.serialized;
 
+import com.google.gson.GsonBuilder;
+
 /**
  * Created by Michał Stobiński on 2016-01-28.
  */
-public class Login implements iSend {
+public class Login implements iSerialize {
 
     private String function;
     private String username;
@@ -28,4 +30,9 @@ public class Login implements iSend {
     public void setPassword(String password) { this.password = password; }
 
     @Override public String getFunction() { return function; }
+
+    @Override
+    public String serializeToJson() {
+        return new GsonBuilder().create().toJson(this, Login.class);
+    }
 }

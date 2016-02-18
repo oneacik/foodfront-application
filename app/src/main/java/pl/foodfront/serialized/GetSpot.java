@@ -1,9 +1,11 @@
 package pl.foodfront.serialized;
 
+import com.google.gson.GsonBuilder;
+
 /**
  * Created by Michał Stobiński on 2016-01-29.
  */
-public class GetSpot implements iSend {
+public class GetSpot implements iSerialize {
 
     private String function;
 
@@ -20,4 +22,10 @@ public class GetSpot implements iSend {
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
+
+    @Override
+    public String serializeToJson() {
+        return new GsonBuilder().create().toJson(this, GetSpot.class);
+    }
+
 }

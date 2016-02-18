@@ -1,7 +1,7 @@
 package pl.foodfront.communication;
 
 /**
- * Created by user on 2016-01-29.
+ * Created by Michał Stobiński on 2016-01-29.
  */
 enum eFunctions {
 

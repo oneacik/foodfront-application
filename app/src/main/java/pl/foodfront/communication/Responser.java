@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import pl.foodfront.serialized.Error;
 import pl.foodfront.serialized.Place;
 import pl.foodfront.serialized.Spots;
-import pl.foodfront.serialized.iSend;
+import pl.foodfront.serialized.iSerialize;
 import pl.foodfront.views.ICallback;
 import pl.foodfront.views.ILoginCallback;
 import pl.foodfront.views.IMainCallback;
@@ -21,7 +21,7 @@ class Responser {
         this.callback = callback;
     }
 
-    protected void answerMe(iSend send, String response) {
+    protected void answerMe(iSerialize send, String response) {
 
         String s = send.getFunction();
         if (s.equals(eFunctions.LOGIN.toString())) {
@@ -32,7 +32,6 @@ class Responser {
 
         } else if (s.equals(eFunctions.GET_SPOT.toString())) {
             answerForGetSpot(response);
-
         }
 
     }
